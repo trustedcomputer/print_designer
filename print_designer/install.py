@@ -222,8 +222,8 @@ def get_chromium_download_url():
 
 	platform_key = calculate_platform()
 
-	version = "133.0.6943.35"
-	playwright_build_version = "1157"
+	version = "140.0.7339.41"
+	playwright_build_version = "1189"
 
 	base_url = "https://storage.googleapis.com/chrome-for-testing-public/"
 	playwright_base_url = "https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/"
