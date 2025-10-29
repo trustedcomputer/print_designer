@@ -5,6 +5,7 @@ import time
 
 import frappe
 from frappe.monitor import add_data_to_monitor
+from frappe.utils.data import get_url
 from frappe.utils.error import log_error
 from frappe.utils.jinja_globals import is_rtl
 from frappe.utils.pdf import pdf_body_html as fw_pdf_body_html
