@@ -150,3 +150,10 @@ def measure_time(func):
 		return result
 
 	return wrapper
+	
+
+def get_host_url():
+	if frappe.request:
+		return frappe.request.host_url
+	else:
+		return get_url() + "/"
