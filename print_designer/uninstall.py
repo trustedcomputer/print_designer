@@ -31,7 +31,8 @@ def delete_custom_fields(custom_fields):
 
 
 def remove_pdf_generator_option():
-	set_pdf_generator_option("remove")
+	#set_pdf_generator_option("remove")
+	pass
 
 
 def before_uninstall():
