@@ -55,7 +55,6 @@ def setup_chromium():
 
 	try:
 		executable = find_or_download_chromium_executable()
-		click.echo(f"Chromium is already set up at {executable}")
 	except Exception as e:
 		click.echo(f"Failed to setup Chromium: {e}")
 		raise RuntimeError(f"Failed to setup Chromium: {e}")
@@ -109,6 +108,8 @@ def find_or_download_chromium_executable():
 	if not exec_path.exists():
 		click.echo("Chromium is not available. downloading...")
 		download_chromium()
+	else:
+		click.echo(f"Chromium is already set up at {exec_path}")
 
 	if not exec_path.exists():
 		click.echo("Error while downloading chrome")
@@ -172,9 +173,9 @@ def download_chromium():
 					os.rename(executable_shell, os.path.join(renamed_dir, "headless_shell"))
 				else:
 					raise RuntimeError("Failed to rename executable. Expected chrome-headless-shell.")
-			# Make the `headless_shell` executable
-			exec_path = os.path.join(renamed_dir, executable_path[1])
-			make_chromium_executable(exec_path)
+
+		exec_path = os.path.join(chromium_dir, chrome_folder_name, executable_path[1])
+		make_chromium_executable(exec_path)
 
 		click.echo(f"Chromium is ready to use at: {chromium_dir}")
 	except requests.Timeout:
@@ -334,7 +335,12 @@ def add_pdf_generator_option():
 
 
 def set_pdf_generator_option(action: Literal["add", "remove"]):
-	options = (frappe.get_meta("Print Format").get_field("pdf_generator").options).split("\n")
+	field = frappe.get_meta("Print Format").get_field("pdf_generator")
+
+	if not field:
+		return
+
+	options = (field.options).split("\n")
 
 	if "chrome" in options and action == "add":
 		return
